@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="theme-color" content="#050816">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="KYRON Forge">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="../kyron-aircraft-forge-mobile/icon.svg" type="image/svg+xml">
+<title>KYRON Aircraft Forge Mobile v1</title>
+<link rel="stylesheet" href="../kyron-aircraft-forge-mobile/style.css">
+<style>
+:root{--cyan:#54edff;--green:#68ffc1;--mag:#f063ff}.launch{position:fixed;z-index:200;inset:0;display:grid;place-items:end center;background:radial-gradient(circle at 50% 18%,#163b70 0,transparent 33%),linear-gradient(180deg,#030611,#080d1b 60%,#02040a);padding:18px}.launch.off{display:none}.launchCard{width:min(100%,520px);border:1px solid #3d5c8d;border-radius:28px;padding:20px;background:linear-gradient(145deg,#111d39f2,#070c19f2);box-shadow:0 30px 90px #000c,inset 0 1px #fff1;backdrop-filter:blur(24px)}.launchMark{width:70px;height:70px;border-radius:22px;display:grid;place-items:center;font-weight:1000;font-size:21px;color:var(--cyan);border:1px solid var(--cyan);box-shadow:0 0 35px #54edff55;background:#071020}.launch h1{font-size:27px;margin:16px 0 6px}.launch p{font-size:12px;line-height:1.55;color:#9badd0}.launchGrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:15px 0}.launchGrid div{border:1px solid #2f436e;border-radius:15px;padding:11px;background:#081123}.launchGrid b{display:block;font-size:10px;color:#dce9ff}.launchGrid span{display:block;font-size:9px;color:#8da1c9;margin-top:4px}.launchBtn{width:100%;border:0;border-radius:17px;padding:16px;background:linear-gradient(120deg,var(--cyan),var(--green));color:#021218;font-weight:1000;letter-spacing:.04em}.installHint{margin-top:10px;text-align:center;font-size:9px;color:#8295bd}.platformBadge{position:fixed;z-index:35;right:14px;top:calc(env(safe-area-inset-top) + 72px);padding:7px 9px;border-radius:99px;border:1px solid #68ffc166;background:#0b2c2299;color:#a6ffdb;font-size:9px;font-weight:900}.fatal{display:none;position:fixed;z-index:250;inset:0;background:#050815;color:#fff;padding:28px}.fatal.show{display:block}.fatal pre{white-space:pre-wrap;color:#ffb2c0}.app{padding-top:calc(env(safe-area-inset-top) + 12px)}header{top:env(safe-area-inset-top)}.viewport{height:350px}.module{min-height:104px}.primary{font-size:12px}.buildProof{margin-top:10px;border:1px solid #54edff55;background:#071526;border-radius:15px;padding:10px;font-size:9px;color:#a9c6e9;line-height:1.5}.buildProof b{color:#72f2ff}
+</style>
+</head>
+<body>
+<div id="launch" class="launch">
+  <div class="launchCard">
+    <div class="launchMark">KF</div>
+    <h1>KYRON Aircraft Forge</h1>
+    <p>Die echte Handy-Fassung. Fluggerät auswählen, Module einsetzen, Werte verändern und ein Build-ZIP direkt auf iPhone oder Android erzeugen.</p>
+    <div class="launchGrid">
+      <div><b>4 FLUGGERÄTE</b><span>Nightlance, Highrider, Perzolon, Peterang</span></div>
+      <div><b>PHONE BUILD</b><span>OBJ, JSON und MSFS-Konfigurationsquellen</span></div>
+      <div><b>ANDROID + iPHONE</b><span>Ein Web-App-Link für beide Systeme</span></div>
+      <div><b>OFFLINE-FÄHIG</b><span>Nach Installation über den Home-Bildschirm</span></div>
+    </div>
+    <button id="startForge" class="launchBtn">FORGE JETZT STARTEN</button>
+    <div class="installHint">Danach Browser-Menü/Teilen → Zum Home-Bildschirm</div>
+  </div>
+</div>
+<div id="fatal" class="fatal"><h2>Forge konnte nicht geladen werden</h2><p>Bitte Seite neu laden. Der Fehler wurde unten protokolliert.</p><pre id="fatalText"></pre></div>
+<div class="platformBadge" id="platformBadge">MOBILE READY</div>
+<div class="app">
+<header><div class="logo">KF</div><div><h1>KYRON AIRCRAFT FORGE</h1><p>Mobile Build Core v1.0</p></div><b>iOS + ANDROID</b></header>
+<section><h2>FLUGGERÄT</h2><div id="families" class="families"></div></section>
+<section class="viewport"><svg id="preview" viewBox="0 0 500 300"></svg><div class="hud"><span id="target">M 0.82</span><span id="status">READY</span></div><div class="viewbar"><button data-view="top" class="on">DRAUF</button><button data-view="side">SEITE</button><button id="wire">WIRE</button><button id="mutate">MUTIEREN</button></div></section>
+<section><h2>BUILD-NAME</h2><div class="name"><input id="name" value="PX-01 NIGHTLANCE MOBILE"><button id="save">SICHERN</button></div></section>
+<div id="modules"></div>
+<section><h2>GEOMETRIE & LEISTUNG</h2><div id="controls" class="panel"></div></section>
+<section><h2>DIAGNOSE</h2><div id="stats" class="stats"></div><div id="warning" class="warning"></div></section>
+<section><h2>LOKALE BUILDS</h2><div id="history" class="panel history"></div></section>
+<section class="panel info"><strong>Handy-Build:</strong> BUILD ZIP erzeugt direkt auf dem Smartphone ein echtes Paket mit OBJ-Geometrie, MTL, Design-Manifest und MSFS-Konfigurationsquellen.<div class="buildProof"><b>WICHTIG:</b> Das ist kein wirkungsloser Bildexport. Das ZIP enthält technische Quelldateien. Blender und der finale MSFS-DevMode-Build laufen später auf Mac/Windows.</div></section>
+</div>
+<nav><button id="share" class="secondary">TEILEN</button><button id="build" class="primary">BUILD ZIP</button></nav>
+<div id="sheet" class="sheet"><div><h3 id="sheetTitle">Build läuft</h3><p id="sheetText">Direkt auf deinem Handy.</p><div class="progress"><i id="bar"></i></div><pre id="log"></pre><footer><button id="close">SCHLIESSEN</button><button id="again" disabled>NOCHMALS LADEN</button></footer></div></div>
+<script>
+window.addEventListener('error',e=>{document.getElementById('fatalText').textContent=e.message+'\n'+(e.filename||'')+':'+(e.lineno||'');document.getElementById('fatal').classList.add('show')});
+document.getElementById('startForge').addEventListener('click',()=>{document.getElementById('launch').classList.add('off');localStorage.setItem('kyron-mobile-launched','1')});
+if(localStorage.getItem('kyron-mobile-launched')==='1')document.getElementById('launch').classList.add('off');
+const ua=navigator.userAgent.toLowerCase();document.getElementById('platformBadge').textContent=ua.includes('android')?'ANDROID READY':/(iphone|ipad|ipod)/.test(ua)?'iPHONE READY':'MOBILE READY';
+</script>
+<script src="../kyron-aircraft-forge-mobile/app.js"></script>
+<script>
+if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js').catch(()=>{})}
+setTimeout(()=>{if(!document.querySelector('.family')){document.getElementById('fatalText').textContent='Der Build-Core wurde nicht initialisiert.';document.getElementById('fatal').classList.add('show')}},2500);
+</script>
+</body>
+</html>
